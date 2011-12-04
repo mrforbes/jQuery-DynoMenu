@@ -1,6 +1,6 @@
 jQuery Dynomenu
 		
-Dynomenu is a CSS3 based dropdown menu as coded by Red here: <a href="http://www.red-team-design.com/wp-content/uploads/2011/03/css3-dropdown-menu-demo.html">http://www.red-team-design.com/wp-content/uploads/2011/03/css3-dropdown-menu-demo.html</a>. 
+Dynomenu is a CSS3 based dropdown menu as coded by Red here: http://www.red-team-design.com/wp-content/uploads/2011/03/css3-dropdown-menu-demo.html. 
 The twist that drove the plugin is that it will adjust the contents of the menu based on the width of the menu and its contents - it will make the font smaller and/or extend the menu via a 'more' link.
 
-		
+See a simple demo here: http://mrforbes.com/dynomenu
