@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>
+			jquery dynoMenu
+		</title>
+		<link rel="stylesheet" href="css/dynomenu.css" />
+		<style type="text/css">
+			#container{
+				width:80%;
+			}
+		</style>
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+		<script src="js/jquery.dynoMenu.js"></script>
+		<script>
+			$(function(){
+				var menu = new $.dynoMenu('.dynomenu',{})
+				
+				$("#containerWidth").on('click','a',function(e){
+					e.preventDefault();
+					var val = $(this).prev().val();
+					$("#container").css('width',val);
+					menu.updateRender();
+				})
+				
+				$("#addMenuItem").on('click','a',function(e){
+					e.preventDefault();
+					var val = $(this).prev().val();
+					$(".dynomenu").find('.more').before('<li><a href="#">'+val+'</a></li>');
+					menu.updateRender();
+				})
+				
+			})
+		</script>
+	</head>
+	<body>
+		<header>
+			<h1>jquery dynomenu</h1>
+		</header>
+		<p>
+			Dynomenu is a CSS3 based dropdown menu as coded by Red here: <a href="http://www.red-team-design.com/wp-content/uploads/2011/03/css3-dropdown-menu-demo.html">http://www.red-team-design.com/wp-content/uploads/2011/03/css3-dropdown-menu-demo.html</a>. 
+			The plugin will adjust the contents of the menu based on the width of the menu and its contents - it will make the font smaller and/or add scrolling.
+		</p>
+		<div id="container">
+		<nav>
+			<ul class="dynomenu">
+			       <li><a href="http://www.red-team-design.com/">Home</a></li>
+			       <li>
+			       		<a href="#">A really long menu item</a>
+			       </li>
+			        <li>
+			       		<a href="#">A really long menu item</a>
+			       </li>
+			       <li>
+			       		<a href="#">A really long menu item</a>
+			       </li>
+			       <li>
+			       	<a href="#">not another one</a>
+			       </li>
+					<li>
+						<a href="#">Categories</a>
+						<ul>
+							<li>
+								<a href="#">CSS</a>
+								<ul>
+									<li><a href="#">Item 11</a></li>
+									<li><a href="#">Item 12</a></li>
+									<li><a href="#">Item 13</a></li>
+									<li><a href="#">Item 14</a></li>
+								</ul>				
+							</li>
+							<li>
+								<a href="#">Graphic design</a>
+								<ul>
+									<li><a href="#">Item 21</a></li>
+									<li><a href="#">Item 22</a></li>
+									<li><a href="#">Item 23</a></li>
+									<li><a href="#">Item 24</a></li>
+								</ul>				
+							</li>
+							<li>
+								<a href="#">Development tools</a>
+								<ul>
+									<li><a href="#">Item 31</a></li>
+									<li><a href="#">Item 32</a></li>
+									<li><a href="#">Item 33</a></li>
+									<li><a href="#">Item 34</a></li>
+								</ul>				
+							</li>
+							<li>
+								<a href="#">Web design</a>				
+								<ul>
+									<li><a href="#">Item 41</a></li>
+									<li><a href="#">Item 42</a></li>
+									<li><a href="#">Item 43</a></li>
+									<li><a href="#">Item 44</a></li>
+								</ul>	
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Work</a>
+						<ul>
+							<li>
+								<a href="#">Work 1</a>
+								<ul>
+									<li>
+										<a href="#">Work 11</a>		
+										<ul>
+											<li>
+												<a href="#">Work 111</a>						
+											</li>
+											<li>
+												<a href="#">Work 112</a>
+											</li>
+											<li>
+												<a href="#">Work 113</a>
+											</li>
+										</ul>							
+									</li>
+									<li>
+										<a href="#">Work 12</a>
+										<ul>
+											<li>
+												<a href="#">Work 121</a>						
+											</li>
+											<li>
+												<a href="#">Work 122</a>
+											</li>
+											<li>
+												<a href="#">Work 123</a>
+											</li>
+										</ul>							
+									</li>
+									<li>
+										<a href="#">Work 13</a>
+										<ul>
+											<li>
+												<a href="#">Work 131</a>						
+											</li>
+											<li>
+												<a href="#">Work 132</a>
+											</li>
+											<li>
+												<a href="#">Work 133</a>
+											</li>
+										</ul>							
+									</li>
+								</ul>					
+							</li>
+							<li>
+								<a href="#">Work 2</a>
+								<ul>
+									<li>
+										<a href="#">Work 21</a>
+										<ul>
+											<li>
+												<a href="#">Work 211</a>						
+											</li>
+											<li>
+												<a href="#">Work 212</a>
+											</li>
+											<li>
+												<a href="#">Work 213</a>
+											</li>
+										</ul>							
+									</li>
+									<li>
+										<a href="#">Work 22</a>
+										<ul>
+											<li>
+												<a href="#">Work 221</a>						
+											</li>
+											<li>
+												<a href="#">Work 222</a>
+											</li>
+											<li>
+												<a href="#">Work 223</a>
+											</li>
+										</ul>							
+									</li>
+									<li>
+										<a href="#">Work 23</a>
+										<ul>
+											<li>
+												<a href="#">Work 231</a>						
+											</li>
+											<li>
+												<a href="#">Work 232</a>
+											</li>
+											<li>
+												<a href="#">Work 233</a>
+											</li>
+										</ul>							
+									</li>
+								</ul>					
+							</li>
+							<li>
+								<a href="#">Work 3</a>
+								<ul>
+									<li>
+										<a href="#">Work 31</a>
+										<ul>
+											<li>
+												<a href="#">Work 311</a>						
+											</li>
+											<li>
+												<a href="#">Work 312</a>
+											</li>
+											<li>
+												<a href="#">Work 313</a>
+											</li>
+										</ul>							
+									</li>
+									<li>
+										<a href="#">Work 32</a>
+										<ul>
+											<li>
+												<a href="#">Work 321</a>						
+											</li>
+											<li>
+												<a href="#">Work 322</a>
+											</li>
+											<li>
+												<a href="#">Work 323</a>
+											</li>
+										</ul>							
+									</li>
+									<li>
+										<a href="#">Work 33</a>
+										<ul>
+											<li>
+												<a href="#">Work 331</a>						
+											</li>
+											<li>
+												<a href="#">Work 332</a>
+											</li>
+											<li>
+												<a href="#">Work 333</a>
+											</li>
+										</ul>							
+									</li>
+								</ul>					
+							</li>
+						</ul>		
+					</li>
+					<li>
+						<a href="#">About</a>	
+					</li>
+					<li>
+						<a href="#">Contact</a>	
+					</li>
+			</ul>
+		</nav>
+		
+		<h2>Play with it:</h2>
+		
+		
+		<ul>
+			<li id="containerWidth">
+				<label>Change Container Width:</label>
+				<input name='containerWidth'>
+				<a href="#">go</a>
+				(or resize the page)
+			</li>
+			<li id="addMenuItem">
+				<label>Add New Menu Item</label>
+				<input name="addMenuItem">
+				<a href="#">go</a>
+			</li>
+		</ul>
+		
+		</div>
+	</body>
+</html>
