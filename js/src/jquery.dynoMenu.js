@@ -1,9 +1,11 @@
 /*
- * @plugin: jquery dynoMenu v0.5
+ * @plugin: jquery dynoMenu v0.6
  * @author: michael forbes
  * @description: dynamic css3 based drop down menu, adjust font size/add dropdown menu to accomodate long horizontal menus without wrapping
+ * @compatibility: tested in IE8, IE9, FF8+, Chrome 14+, Safari 5+
  * 
- * 
+ * 0.6 changes
+ * added 'cache' to improve performance / reduce DOM access count
  */
 
 ;(function($) {
@@ -15,8 +17,16 @@
             adjustMenuBy: 'dropdown',
             onSelect: function() {}
         },
+        cache = {},
         resizeTimeout = null,
         plugin = this,
+        // this will store values so we can reduce DOM hits
+        addToCache = function(key,value){
+            if(typeof(key) === 'string') {
+                cache[key] = value;
+            }
+        },
+        // this will move the menu to the right as needed
         shiftMenuRight = function(el){
             el.find('>li >a').each(function(){
                 var self = $(this),
@@ -92,12 +102,11 @@
         },
         adjustMenu = function(){
             // first, try shrinking the menu font size to the min size in the settings to make it all fit... if that doesn't work add a scroll, dropdown, or some other method of collecting the extra items.
-            //get current font size
-            var fontSize = parseInt(plugin.el.find('> li > a:first').css('fontSize'),10),
-                newFontSize = fontSize - 1;
+            //use cached font size value
+            cache.fontSize = cache.fontSize - 1;
             //try reducing the font size to make it fit
-            if(fontSize > plugin.settings.minFontSize){
-                plugin.el.find('a').css('fontSize', newFontSize);
+            if(cache.fontSize > plugin.settings.minFontSize){
+                plugin.el.find('a').css('fontSize', cache.fontSize);
                 plugin.render();
             }
             //if you are here, that means that the smaller font size wasn't enough... decide what to do from here, lets use a setting for it
@@ -111,7 +120,7 @@
          //get the longest item, this is the minimum width each will be if they can spread out
         getMinListItemWidth = function(){
             var minListItemWidth = 0;
-            plugin.el.find('> li > a').each(function(){
+            cache.listItems.each(function(){
                 var width = $(this).outerWidth(true);
                 if(width > minListItemWidth){
                     minListItemWidth = width;
@@ -129,13 +138,14 @@
         //get the total width to see if goes outside the boundaris of the ul
         getTotalListItemWidth = function(){
             var totalListItemWidth = 0;
-            plugin.el.find('> li > a').each(function(){
+            cache.listItems.each(function(){
                 totalListItemWidth += parseInt($(this).outerWidth(true),10);
             });
             return totalListItemWidth;
         },
         getCalculations = function() {
             /* CALCULATIONS */
+          
             //first, get the width of the parent element
             plugin.calc.parentWidth = plugin.el.parent().width();
             // get the current longest list item width
@@ -152,8 +162,9 @@
             plugin.calc = {};
             plugin.settings = $.extend({}, defaults, options);
             plugin.el = $(el);
-            plugin.calc.listItemCount = plugin.el.find('> li').length;
             plugin.calc.originalFontSize = parseInt(plugin.el.find('> li > a:first').css('fontSize'),10);
+            addToCache('fontSize',plugin.calc.originalFontSize);
+           
             plugin.events();
             plugin.render();            
         };
@@ -193,6 +204,7 @@
         //this runs when the page width changes, resets the menu to original defaults and does the calculations again
         plugin.updateRender = function(){
             plugin.el.find('a').attr('style','').css('fontSize',plugin.calc.originalFontSize);
+            addToCache('fontSize',plugin.calc.originalFontSize);
             var moreItems = plugin.el.find('.more ul').html();
             plugin.el.find('.more').remove();
             plugin.el.append(moreItems);
@@ -200,10 +212,14 @@
             plugin.render();
         };
         
-        plugin.render = function() {    
+        plugin.render = function() {  
+            // create a single variable for all of the top level list items. this needs to be reset each render so that the calculations are updated
+            addToCache('listItems',plugin.el.find('>li >a'));
+            cache.listItems.attr('style','').css('width','auto');
+            plugin.calc.listItemCount = cache.listItems.length;
             getCalculations();
             var calc = plugin.calc; 
-           
+          
             // if the average width is wider than the widest current list item, make them all wider, otherwise we have to do the heavy lifting
             if(calc.averageListItemWidth > calc.minListItemWidth){
                 equalizeWidth();
@@ -214,8 +230,6 @@
             else {
                 adjustMenu();
             }
-            
-            
             
         };
         
